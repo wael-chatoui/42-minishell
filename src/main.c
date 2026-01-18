@@ -6,7 +6,7 @@
 /*   By: wael <wael@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 17:27:53 by wael              #+#    #+#             */
-/*   Updated: 2025/12/15 23:21:34 by wael             ###   ########.fr       */
+/*   Updated: 2025/12/17 19:19:01 by wael             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,7 @@ void	print_signature()
 int	main(void)
 {
 	print_signature();
+	while (true)
+		;
 	return (0);
 }
