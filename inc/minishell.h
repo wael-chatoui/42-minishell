@@ -6,7 +6,7 @@
 /*   By: wael <wael@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 17:28:22 by wael              #+#    #+#             */
-/*   Updated: 2026/01/18 21:06:04 by wael             ###   ########.fr       */
+/*   Updated: 2026/01/20 20:22:00 by wael             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define MINISHELL_H
 
 # include "../inc/42-libft/libft.h"
+# include "ft_printf.h"
+# include <readline/readline.h>
 
 // global
 extern int g_sig;
@@ -21,39 +23,39 @@ extern int g_sig;
 // structures
 typedef struct	s_env
 {
-	char *name;
-	char *value;
-	struct s_env *next;
+	char			*name;
+	char			*value;
+	struct	s_env	*next;
 }	t_env;
 
 typedef struct	s_redir
 {
-	int type;
-	char *file;
-	int heredoc_fd;
-	struct s_redir *next;
+	int				type;
+	char			*file;
+	int				heredoc_fd;
+	struct s_redir	*next;
 }	t_redir;
 
 typedef struct	s_token
 {
-	int type;
-	char *value;
-	int index;
-	char *input;
-	t_env *env_list;
-	struct s_token *next; // void *next;
+	int				type;
+	char			*value;
+	int				index;
+	char			*input;
+	t_env			*env_list;
+	struct s_token	*next; // void *next;
 }	t_token;
 
 typedef struct	s_cmd
 {
-	char **args;
-	t_redir *redir;
-	int fd_in;
-	int fd_out;
-	t_token *token;
-	t_env *env;
-	struct s_cmd *next;
-	struct s_cmd *head;
+	char			**args;
+	t_redir			*redir;
+	int				fd_in;
+	int				fd_out;
+	t_token			*token;
+	t_env			*env;
+	struct s_cmd	*next;
+	struct s_cmd	*head;
 }	t_cmd;
 
 // enums

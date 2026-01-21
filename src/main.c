@@ -6,7 +6,7 @@
 /*   By: wael <wael@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 17:27:53 by wael              #+#    #+#             */
-/*   Updated: 2025/12/17 19:19:01 by wael             ###   ########.fr       */
+/*   Updated: 2026/01/20 20:57:31 by wael             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,39 @@ void	print_signature()
 		RESET "\n");
 }
 
-int	main(void)
+void	tokenize(t_token *token, char *input)
 {
-	print_signature();
+	int	i;
+
+	i = 0;
+	token->input = ft_strdup(input);
+	while (input[i])
+	{
+		
+		i++;
+	}
+	(void)input;
+}
+
+void	miniloop(t_token *token)
+{
+	char	*input;
+
 	while (true)
-		;
-	return (0);
+	{
+		input = readline("minishell > ");
+		tokenize(token, input);
+	}
+}
+
+int	main(int ac, char **av, char **envp)
+{
+	(void)ac;
+	(void)av;
+	(void)envp;
+	t_token	token;
+
+	print_signature();
+	miniloop(&token);
+	return (EXIT_FAILURE);
 }

@@ -6,7 +6,7 @@
 /*   By: wael <wael@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 18:30:11 by wael              #+#    #+#             */
-/*   Updated: 2025/11/23 15:48:13 by wael             ###   ########.fr       */
+/*   Updated: 2026/01/20 17:50:15 by wael             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,9 @@ int	print_char(char c)
 
 int	print_str(char *str)
 {
-	int	len;
-
 	if (!str)
 		return (write(1, "(null)", 6));
-	while (str[len])
-		write(STDOUT_FILENO, &str[len++], 1);
-	return (len);
+	return (write(STDOUT_FILENO, str, ft_strlen(str)));
 }
 
 int	print_unsigned_base(unsigned long long nbr, char *base)

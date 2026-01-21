@@ -6,7 +6,7 @@
 /*   By: wael <wael@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 18:33:51 by wael              #+#    #+#             */
-/*   Updated: 2025/11/23 15:46:20 by wael             ###   ########.fr       */
+/*   Updated: 2026/01/20 17:58:02 by wael             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdarg.h>
 # include <unistd.h>
 # include <stdint.h>
+# include "../42-libft/libft.h"
 
 int	ft_printf(const char *input, ...);
 int	print_char(char c);
