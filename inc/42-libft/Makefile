@@ -28,6 +28,7 @@ FILES = \
 	ft_strjoin \
 	ft_strtrim \
 	ft_strdup \
+	ft_strcmp \
 	ft_strchr \
 	ft_strrchr \
 	ft_strncmp \
@@ -48,11 +49,7 @@ FILES = \
 	ft_putstr_fd \
 	ft_putendl_fd \
 	ft_putnbr \
-	ft_putnbr_fd \
-	get_next_line \
-	get_next_line_utils \
-	ft_printf/ft_printf \
-	ft_printf/utils
+	ft_putnbr_fd
 
 BONUS = \
 	ft_lstnew_bonus \
@@ -71,7 +68,7 @@ SRC_BONUS = $(addsuffix .c, $(BONUS))
 .PHONY: all re fclean clean bonus
 
 # Where to look for source files (root, printf dir, gnl, and src for future)
-VPATH := .:ft_printf:gnl:src
+VPATH := .:src
 
 INCLUDE_DIR = ./
 NAME = libft.a

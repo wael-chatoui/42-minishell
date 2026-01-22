@@ -6,7 +6,7 @@
 /*   By: wael <wael@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/09 15:01:18 by wael              #+#    #+#             */
-/*   Updated: 2025/12/12 17:05:56 by wael             ###   ########.fr       */
+/*   Updated: 2026/01/22 17:46:24 by wael             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ void	polish_list(t_gnl_list **list)
 {
 	t_gnl_list	*last_node;
 	t_gnl_list	*clean_node;
-	int		i;
-	int		k;
-	char	*buf;
+	int			i;
+	int			k;
+	char		*buf;
 
 	buf = malloc(BUFFER_SIZE + 1);
 	if (!buf)

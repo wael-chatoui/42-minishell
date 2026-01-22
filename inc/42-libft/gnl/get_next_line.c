@@ -6,7 +6,7 @@
 /*   By: wael <wael@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 14:36:34 by wael              #+#    #+#             */
-/*   Updated: 2025/12/12 17:05:56 by wael             ###   ########.fr       */
+/*   Updated: 2026/01/22 17:45:49 by wael             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ static void	create_list(t_gnl_list **list, int fd)
 char	*get_next_line(int fd)
 {
 	static t_gnl_list	*list;
-	char			*next_line;
+	char				*next_line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, &next_line, 0) < 0)
 	{

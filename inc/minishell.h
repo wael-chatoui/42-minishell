@@ -6,29 +6,28 @@
 /*   By: wael <wael@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 17:28:22 by wael              #+#    #+#             */
-/*   Updated: 2026/01/20 20:22:00 by wael             ###   ########.fr       */
+/*   Updated: 2026/01/22 20:21:04 by wael             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "../inc/42-libft/libft.h"
-# include "ft_printf.h"
+# include "libft.h"
 # include <readline/readline.h>
 
 // global
-extern int g_sig;
+extern int	g_sig;
 
 // structures
-typedef struct	s_env
+typedef struct s_env
 {
 	char			*name;
 	char			*value;
-	struct	s_env	*next;
+	struct s_env	*next;
 }	t_env;
 
-typedef struct	s_redir
+typedef struct s_redir
 {
 	int				type;
 	char			*file;
@@ -36,7 +35,7 @@ typedef struct	s_redir
 	struct s_redir	*next;
 }	t_redir;
 
-typedef struct	s_token
+typedef struct s_token
 {
 	int				type;
 	char			*value;
@@ -46,7 +45,7 @@ typedef struct	s_token
 	struct s_token	*next; // void *next;
 }	t_token;
 
-typedef struct	s_cmd
+typedef struct s_cmd
 {
 	char			**args;
 	t_redir			*redir;
@@ -61,31 +60,24 @@ typedef struct	s_cmd
 // enums
 typedef enum e_token_type
 {
-	WORD,        // Un mot classique (ls, -l, echo, "texte")
-	PIPE,        // |
-	REDIR_IN,    // <
-	REDIR_OUT,   // >
-	HEREDOC,     // <<
-	APPEND,      // >>
-	CMD,         // Le nom de la commande
-	ARG,         // Un argument
-	FILE_IN,     // Fichier après <
-	FILE_OUT,    // Fichier après > ou >>
-	LIMITER,     // Le mot-clé après <<
+	WORD, // Un mot classique (ls, -l, echo, "texte")
+	PIPE, // |
+	REDIR_IN, // <
+	REDIR_OUT, // >
+	HEREDOC, // <<
+	APPEND, // >>
+	CMD, // Le nom de la commande
+	ARG, // Un argument
+	FILE_IN, // Fichier après <
+	FILE_OUT, // Fichier après > ou >>
+	LIMITER, // Le mot-clé après <<
 	FILE_APPEND, // Fichier après >>
 }	t_token_type;
-
-//colors
-# define RED     "\033[1;31m"
-# define GREEN   "\033[1;32m"
-# define YELLOW  "\033[1;33m"
-# define BLUE    "\033[1;34m"
-# define MAGENTA "\033[1;35m"
-# define CYAN    "\033[1;36m"
-# define RESET   "\033[0m"
 
 // MACRO
 # define IN_SINGLE_QUOTE 1
 # define IN_DOUBLE_QUOTE 2
+
+void	print_signature(void);
 
 #endif
