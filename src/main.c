@@ -6,7 +6,7 @@
 /*   By: wael <wael@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 17:27:53 by wael              #+#    #+#             */
-/*   Updated: 2026/01/23 12:15:54 by wael             ###   ########.fr       */
+/*   Updated: 2026/01/23 13:49:10 by wael             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,10 @@ void	logger(char *type, void *data)
 	if (!ft_strcmp(type, "ENV"))
 	{
 		env = data;
-		while (env)
-		{
-			printf("%s=%s\n", env->name, env->value);
+		while (env && ft_strcmp(env->name, "PATH"))
 			env = env->next;
-		}
+		if (env)
+		printf("%s=%s\n", env->name, env->value);
 	}
 }
 
@@ -104,6 +103,7 @@ void	miniloop(t_env *env)
 			break ;
 		tokenize(&token, input);
 		logger("DEBUG", token);
+		logger("ENV", env);
 		free_tokens(token);
 		free(input);
 	}
