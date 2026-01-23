@@ -81,9 +81,33 @@ typedef enum e_token_type
 // env.c
 t_env	*init_env(char **envp);
 void	free_env(t_env *env);
+char	**env_to_array(t_env *env);
+char	*get_env_val(t_env *env, char *name);
+void	set_env_val(t_env **env, char *name, char *value);
 
 // token.c
 void	free_tokens(t_token *token);
+
+// parsing
+t_cmd	*parse_tokens(t_token *tokens, t_env *env);
+char	*expand_token_value(char *str, t_env *env);
+
+// execution
+void	free_cmds(t_cmd *cmds);
+char	*find_path(char *cmd, char **envp);
+int		handle_redirections(t_cmd *cmd);
+void	setup_child_signals(void);
+void	setup_parent_signals(void);
+void	execute_cmds(t_cmd *cmds, t_env **env);
+
+// built-ins
+int		ft_echo(char **args);
+int		ft_pwd(void);
+int		ft_cd(char **args, t_env **env);
+int		ft_env(t_env *env);
+int		ft_export(char **args, t_env **env);
+int		ft_unset(char **args, t_env **env);
+int		ft_exit(char **args);
 
 void	print_signature(void);
 

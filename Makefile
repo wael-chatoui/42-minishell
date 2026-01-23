@@ -6,7 +6,7 @@
 #    By: wael <wael@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/22 21:22:21 by wael              #+#    #+#              #
-#    Updated: 2026/01/23 12:08:00 by wael             ###   ########.fr        #
+#    Updated: 2026/01/22 20:24:37 by wael             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,11 +31,18 @@ LIBFT		=	$(LIBFT_DIR)/libft.a
 
 # Source files
 SRCS		=	main.c \
+				caca.c \
 				env.c \
 				token.c \
-				caca.c \
 				built-in/echo.c \
-				built-in/cd.c
+				built-in/cd.c \
+				built-in/builtins_extra.c \
+				parsing/parser.c \
+				parsing/expander.c \
+				execution/exec_utils.c \
+				execution/redirections.c \
+				execution/signals.c \
+				execution/executor.c
 
 # Object files
 OBJS		=	$(SRCS:%.c=$(OBJ_DIR)/%.o)

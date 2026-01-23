@@ -73,3 +73,76 @@ t_env	*init_env(char **envp)
 	}
 	return (head);
 }
+
+char	**env_to_array(t_env *env)
+{
+	int		count;
+	t_env	*tmp;
+	char	**arr;
+	int		i;
+	char	*joined;
+
+	count = 0;
+	tmp = env;
+	while (tmp)
+	{
+		count++;
+		tmp = tmp->next;
+	}
+	arr = malloc(sizeof(char *) * (count + 1));
+	if (!arr)
+		return (NULL);
+	i = 0;
+	tmp = env;
+	while (tmp)
+	{
+		if (tmp->value)
+		{
+			joined = ft_strjoin(tmp->name, "=");
+			arr[i] = ft_strjoin(joined, tmp->value);
+			free(joined);
+		}
+		else
+			arr[i] = ft_strdup(tmp->name);
+		tmp = tmp->next;
+		i++;
+	}
+	arr[i] = NULL;
+	return (arr);
+}
+
+char	*get_env_val(t_env *env, char *name)
+{
+	while (env)
+	{
+		if (!ft_strcmp(env->name, name))
+			return (env->value);
+		env = env->next;
+	}
+	return (NULL);
+}
+
+void	set_env_val(t_env **env, char *name, char *value)
+{
+	t_env	*tmp;
+	t_env	*new;
+
+	tmp = *env;
+	while (tmp)
+	{
+		if (!ft_strcmp(tmp->name, name))
+		{
+			if (tmp->value)
+				free(tmp->value);
+			tmp->value = ft_strdup(value);
+			return ;
+		}
+		tmp = tmp->next;
+	}
+	new = malloc(sizeof(t_env));
+	if (!new) return;
+	new->name = ft_strdup(name);
+	new->value = ft_strdup(value);
+	new->next = *env;
+	*env = new;
+}
