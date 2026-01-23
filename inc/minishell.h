@@ -6,7 +6,7 @@
 /*   By: wael <wael@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 17:28:22 by wael              #+#    #+#             */
-/*   Updated: 2026/01/22 20:21:04 by wael             ###   ########.fr       */
+/*   Updated: 2026/01/23 12:07:22 by wael             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,13 @@ typedef enum e_token_type
 // MACRO
 # define IN_SINGLE_QUOTE 1
 # define IN_DOUBLE_QUOTE 2
+
+// env.c
+t_env	*init_env(char **envp);
+void	free_env(t_env *env);
+
+// token.c
+void	free_tokens(t_token *token);
 
 void	print_signature(void);
 
