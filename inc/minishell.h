@@ -6,7 +6,7 @@
 /*   By: wael <wael@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 17:28:22 by wael              #+#    #+#             */
-/*   Updated: 2026/01/23 12:07:22 by wael             ###   ########.fr       */
+/*   Updated: 2026/01/23 15:05:39 by wael             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "libft.h"
 # include <readline/readline.h>
+# include <readline/history.h>
 
 // global
 extern int	g_sig;

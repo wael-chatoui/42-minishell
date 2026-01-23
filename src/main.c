@@ -6,7 +6,7 @@
 /*   By: wael <wael@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 17:27:53 by wael              #+#    #+#             */
-/*   Updated: 2026/01/23 13:53:21 by wael             ###   ########.fr       */
+/*   Updated: 2026/01/23 17:21:06 by wael             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,6 +162,9 @@ int	main(int ac, char **av, char **envp)
 	token.value = NULL;
 	token.input = NULL;
 
+	token.input = NULL;
+
+	setup_parent_signals();
 	miniloop(&token, &env);
 	free_env(env);
 	return (0);
