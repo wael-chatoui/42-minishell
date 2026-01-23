@@ -6,7 +6,7 @@
 /*   By: wael <wael@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 17:27:53 by wael              #+#    #+#             */
-/*   Updated: 2026/01/23 13:51:54 by wael             ###   ########.fr       */
+/*   Updated: 2026/01/23 13:53:21 by wael             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,14 @@
 
 int		g_sig;
 
-void	logger(char *type, t_token *token)
+void	logger(char *type, void *data)
 {
+	t_token	*token;
+	t_env	*env;
+
 	if (!ft_strcmp(type, "DEBUG"))
 	{
+		token = data;
 		while (token)
 		{
 			printf("[%s]\n", type);
@@ -33,7 +37,7 @@ void	logger(char *type, t_token *token)
 		while (env && ft_strcmp(env->name, "PATH"))
 			env = env->next;
 		if (env)
-		printf("%s=%s\n", env->name, env->value);
+			printf("%s=%s\n", env->name, env->value);
 	}
 }
 
