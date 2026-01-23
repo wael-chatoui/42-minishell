@@ -1,39 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd.c                                               :+:      :+:    :+:   */
+/*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: antigravity <antigravity@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/23 13:25:00 by antigravity       #+#    #+#             */
-/*   Updated: 2026/01/23 13:25:00 by antigravity      ###   ########.fr       */
+/*   Created: 2026/01/23 13:10:00 by antigravity       #+#    #+#             */
+/*   Updated: 2026/01/23 13:10:00 by antigravity      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <signal.h>
 
-int	ft_cd(char **args, t_env **env)
+void	sig_handler_child(int sig)
 {
-	char	*path;
-	char	cwd[1024];
+	(void)sig;
+	// Default behavior for SIGINT and SIGQUIT in child
+	// But actually we might want to do nothing and let waitpid handle status
+}
 
-	if (!args[1])
-	{
-		path = get_env_val(*env, "HOME");
-		if (!path)
-		{
-			write(2, "Minishell: cd: HOME not set\n", 28);
-			return (1);
-		}
-	}
-	else
-		path = args[1];
-	if (chdir(path) != 0)
-	{
-		perror("cd");
-		return (1);
-	}
-	getcwd(cwd, sizeof(cwd));
-	set_env_val(env, "PWD", cwd);
-	return (0);
+void	setup_child_signals(void)
+{
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
+}
+
+void	setup_parent_signals(void)
+{
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 }

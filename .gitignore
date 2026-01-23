@@ -1,2 +1,7 @@
 inc/42-libft/obj
+inc/42-libft/objs
 obj/
+*.o
+*.a
+minishell
+.DS_Store
