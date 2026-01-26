@@ -90,6 +90,6 @@ fclean:		clean
 re:			fclean all
 
 norm:
-			@norminette $(SRC_DIR) $(INC_DIR)/minishell.h
+			@norminette $(SRC_DIR) $(INC_DIR)
 
 .PHONY:		all clean fclean re norm

@@ -6,7 +6,7 @@
 /*   By: wael <wael@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 12:05:00 by wael              #+#    #+#             */
-/*   Updated: 2026/01/23 12:07:18 by wael             ###   ########.fr       */
+/*   Updated: 2026/01/24 01:09:28 by wael             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,12 @@ static t_env	*new_env_node(char *env_str)
 		j++;
 	node->name = ft_substr(env_str, 0, j);
 	if (env_str[j] == '=')
-		node->value = ft_strdup(env_str + j + 1);
+	{
+		// if (ft_strcmp(node->name, "SHLVL"))
+		// 	node->value = ft_itoa(ft_atoi(node->value) + 1);
+		// else
+			node->value = ft_strdup(env_str + j + 1);
+	}
 	else
 		node->value = NULL;
 	node->next = NULL;
