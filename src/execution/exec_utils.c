@@ -3,15 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antigravity <antigravity@student.42.fr>    +#+  +:+       +#+        */
+/*   By: wael <wael@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 13:00:00 by antigravity       #+#    #+#             */
-/*   Updated: 2026/01/23 13:00:00 by antigravity      ###   ########.fr       */
+/*   Updated: 2026/02/01 00:22:50 by wael             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*
+** Frees the list of commands and their content
+** @param cmds: The list of commands to free
+*/
 void	free_cmds(t_cmd *cmds)
 {
 	t_cmd	*tmp;
@@ -41,6 +45,12 @@ void	free_cmds(t_cmd *cmds)
 	}
 }
 
+/*
+** Checks if a command exists in one of the paths
+** @param cmd: The command name
+** @param paths: The array of paths to check
+** @return: The full path to the command or NULL
+*/
 static char	*check_path(char *cmd, char **paths)
 {
 	int		i;
@@ -61,6 +71,12 @@ static char	*check_path(char *cmd, char **paths)
 	return (NULL);
 }
 
+/*
+** Finds the full path of a command using PATH environment variable
+** @param cmd: The command name
+** @param envp: The environment variables array
+** @return: The full path to the command or NULL
+*/
 char	*find_path(char *cmd, char **envp)
 {
 	int		i;

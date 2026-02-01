@@ -12,6 +12,11 @@
 
 #include "minishell.h"
 
+/*
+** Executes the echo command
+** @param args: Arguments array
+** @return: 0 on success
+*/
 int	ft_echo(char **args)
 {
 	int	i;
@@ -36,6 +41,10 @@ int	ft_echo(char **args)
 	return (0);
 }
 
+/*
+** Executes the pwd command (prints current working directory)
+** @return: 0 on success, 1 on failure
+*/
 int	ft_pwd(void)
 {
 	char	cwd[1024];

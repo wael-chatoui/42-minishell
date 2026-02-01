@@ -6,12 +6,16 @@
 /*   By: wael <wael@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 12:05:00 by wael              #+#    #+#             */
-/*   Updated: 2026/01/24 01:09:28 by wael             ###   ########.fr       */
+/*   Updated: 2026/02/01 00:33:43 by wael             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*
+** Frees the environment list
+** @param env: The environment list to free
+*/
 void	free_env(t_env *env)
 {
 	t_env	*tmp;
@@ -42,9 +46,9 @@ static t_env	*new_env_node(char *env_str)
 	node->name = ft_substr(env_str, 0, j);
 	if (env_str[j] == '=')
 	{
-		// if (ft_strcmp(node->name, "SHLVL"))
-		// 	node->value = ft_itoa(ft_atoi(node->value) + 1);
-		// else
+		if (!ft_strcmp(node->name, "SHLVL"))
+			node->value = ft_itoa(ft_atoi(&env_str[j + 1]) + 1);
+		else
 			node->value = ft_strdup(env_str + j + 1);
 	}
 	else
@@ -53,6 +57,11 @@ static t_env	*new_env_node(char *env_str)
 	return (node);
 }
 
+/*
+** Initializes the environment list from envp array
+** @param envp: The environment variables array
+** @return: The head of the environment list
+*/
 t_env	*init_env(char **envp)
 {
 	t_env	*head;
@@ -77,77 +86,4 @@ t_env	*init_env(char **envp)
 		i++;
 	}
 	return (head);
-}
-
-char	**env_to_array(t_env *env)
-{
-	int		count;
-	t_env	*tmp;
-	char	**arr;
-	int		i;
-	char	*joined;
-
-	count = 0;
-	tmp = env;
-	while (tmp)
-	{
-		count++;
-		tmp = tmp->next;
-	}
-	arr = malloc(sizeof(char *) * (count + 1));
-	if (!arr)
-		return (NULL);
-	i = 0;
-	tmp = env;
-	while (tmp)
-	{
-		if (tmp->value)
-		{
-			joined = ft_strjoin(tmp->name, "=");
-			arr[i] = ft_strjoin(joined, tmp->value);
-			free(joined);
-		}
-		else
-			arr[i] = ft_strdup(tmp->name);
-		tmp = tmp->next;
-		i++;
-	}
-	arr[i] = NULL;
-	return (arr);
-}
-
-char	*get_env_val(t_env *env, char *name)
-{
-	while (env)
-	{
-		if (!ft_strcmp(env->name, name))
-			return (env->value);
-		env = env->next;
-	}
-	return (NULL);
-}
-
-void	set_env_val(t_env **env, char *name, char *value)
-{
-	t_env	*tmp;
-	t_env	*new;
-
-	tmp = *env;
-	while (tmp)
-	{
-		if (!ft_strcmp(tmp->name, name))
-		{
-			if (tmp->value)
-				free(tmp->value);
-			tmp->value = ft_strdup(value);
-			return ;
-		}
-		tmp = tmp->next;
-	}
-	new = malloc(sizeof(t_env));
-	if (!new) return;
-	new->name = ft_strdup(name);
-	new->value = ft_strdup(value);
-	new->next = *env;
-	*env = new;
 }

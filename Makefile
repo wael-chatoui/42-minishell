@@ -6,7 +6,7 @@
 #    By: wael <wael@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/22 21:22:21 by wael              #+#    #+#              #
-#    Updated: 2026/01/22 20:24:37 by wael             ###   ########.fr        #
+#    Updated: 2026/02/01 00:35:24 by wael             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,15 +31,22 @@ LIBFT		=	$(LIBFT_DIR)/libft.a
 
 # Source files
 SRCS		=	main.c \
-				caca.c \
 				env.c \
+				env_utils.c \
+				env_modify.c \
 				token.c \
 				built-in/echo.c \
 				built-in/cd.c \
 				built-in/builtins_extra.c \
 				parsing/parser.c \
+				parsing/lexer.c \
+				parsing/lexer_utils.c \
 				parsing/expander.c \
+				parsing/expander_utils.c \
+				parsing/parser_utils.c \
 				execution/exec_utils.c \
+				execution/child_exec.c \
+				execution/builtin_exec.c \
 				execution/redirections.c \
 				execution/signals.c \
 				execution/executor.c

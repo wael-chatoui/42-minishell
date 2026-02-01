@@ -3,15 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_extra.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antigravity <antigravity@student.42.fr>    +#+  +:+       +#+        */
+/*   By: wael <wael@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 13:30:00 by antigravity       #+#    #+#             */
-/*   Updated: 2026/01/23 13:30:00 by antigravity      ###   ########.fr       */
+/*   Updated: 2026/02/01 00:33:45 by wael             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*
+** Executes the env command (prints environment variables)
+** @param env: Environment list
+** @return: 0 on success
+*/
 int	ft_env(t_env *env)
 {
 	while (env)
@@ -28,6 +33,12 @@ int	ft_env(t_env *env)
 	return (0);
 }
 
+/*
+** Executes the export command (add/update env variable)
+** @param args: Arguments array
+** @param env: Environment list
+** @return: 0 on success
+*/
 int	ft_export(char **args, t_env **env)
 {
 	char	*name;
@@ -44,7 +55,7 @@ int	ft_export(char **args, t_env **env)
 		if (eq)
 		{
 			name = ft_substr(args[i], 0, eq - args[i]);
-			value = eq + 1; // Assuming value is valid pointer
+			value = eq + 1;
 			set_env_val(env, name, value);
 			free(name);
 		}
@@ -53,42 +64,33 @@ int	ft_export(char **args, t_env **env)
 	return (0);
 }
 
+/*
+** Executes the unset command (remove env variable)
+** @param args: Arguments array
+** @param env: Environment list
+** @return: 0 on success
+*/
 int	ft_unset(char **args, t_env **env)
 {
-	t_env	*tmp;
-	t_env	*prev;
 	int		i;
 
 	i = 1;
 	while (args[i])
 	{
-		tmp = *env;
-		prev = NULL;
-		while (tmp)
-		{
-			if (!ft_strcmp(tmp->name, args[i]))
-			{
-				if (prev)
-					prev->next = tmp->next;
-				else
-					*env = tmp->next;
-				free(tmp->name);
-				if (tmp->value)
-					free(tmp->value);
-				free(tmp);
-				break ;
-			}
-			prev = tmp;
-			tmp = tmp->next;
-		}
+		remove_env_var(env, args[i]);
 		i++;
 	}
 	return (0);
 }
 
+/*
+** Executes the exit command
+** @param args: Arguments array
+** @return: Does not return (exits process) or 0
+*/
 int	ft_exit(char **args)
 {
-    (void)args;
+	(void)args;
 	exit(0);
 	return (0);
 }

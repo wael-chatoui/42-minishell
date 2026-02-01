@@ -3,15 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antigravity <antigravity@student.42.fr>    +#+  +:+       +#+        */
+/*   By: wael <wael@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 13:25:00 by antigravity       #+#    #+#             */
-/*   Updated: 2026/01/23 13:25:00 by antigravity      ###   ########.fr       */
+/*   Updated: 2026/02/01 00:23:20 by wael             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*
+** Executes the cd command
+** @param args: Arguments array
+** @param env: Environment list
+** @return: 0 on success, 1 on failure
+*/
 int	ft_cd(char **args, t_env **env)
 {
 	char	*path;

@@ -6,12 +6,16 @@
 /*   By: wael <wael@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 12:05:00 by wael              #+#    #+#             */
-/*   Updated: 2026/01/23 12:07:20 by wael             ###   ########.fr       */
+/*   Updated: 2026/02/01 00:23:35 by wael             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*
+** Frees the list of tokens
+** @param token: The head of the token list
+*/
 void	free_tokens(t_token *token)
 {
 	t_token	*tmp;

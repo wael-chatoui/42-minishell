@@ -6,7 +6,7 @@
 /*   By: wael <wael@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 13:10:00 by antigravity       #+#    #+#             */
-/*   Updated: 2026/01/23 17:21:04 by wael             ###   ########.fr       */
+/*   Updated: 2026/02/01 00:39:45 by wael             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@
 void	sig_handler_child(int sig)
 {
 	(void)sig;
-	// Default behavior for SIGINT and SIGQUIT in child
-	// But actually we might want to do nothing and let waitpid handle status
 }
 
 void	sig_int_handler(int sig)
@@ -29,12 +27,18 @@ void	sig_int_handler(int sig)
 	rl_redisplay();
 }
 
+/*
+** Sets up signals for child processes (default behavior)
+*/
 void	setup_child_signals(void)
 {
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
 }
 
+/*
+** Sets up signals for the parent process (interactive shell)
+*/
 void	setup_parent_signals(void)
 {
 	signal(SIGINT, sig_int_handler);

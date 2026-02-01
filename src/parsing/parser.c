@@ -3,78 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antigravity <antigravity@student.42.fr>    +#+  +:+       +#+        */
+/*   By: wael <wael@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 12:55:00 by antigravity       #+#    #+#             */
-/*   Updated: 2026/01/23 12:55:00 by antigravity      ###   ########.fr       */
+/*   Updated: 2026/02/01 00:30:23 by wael             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static t_cmd	*create_cmd(void)
+/*
+** Fills the command arguments array
+** @param cmd: The command structure
+** @param tokens: Pointer to the list of tokens
+** @param env: The environment structure
+*/
+static void	fill_args_loop(t_cmd *cmd, t_token **curr, int *i, t_env *env)
 {
-	t_cmd	*cmd;
-
-	cmd = malloc(sizeof(t_cmd));
-	if (!cmd)
-		return (NULL);
-	cmd->args = NULL;
-	cmd->redir = NULL;
-	cmd->fd_in = -1;
-	cmd->fd_out = -1;
-	cmd->token = NULL;
-	cmd->env = NULL;
-	cmd->next = NULL;
-	cmd->head = NULL;
-	return (cmd);
-}
-
-static void	add_redir(t_cmd *cmd, t_token *token, t_token *file_token)
-{
-	t_redir	*new_redir;
-	t_redir	*last;
-
-	new_redir = malloc(sizeof(t_redir));
-	if (!new_redir)
-		return ;
-	new_redir->type = token->type;
-	new_redir->file = NULL;
-	if (file_token)
-		new_redir->file = ft_strdup(file_token->value);
-	new_redir->heredoc_fd = -1;
-	new_redir->next = NULL;
-	if (!cmd->redir)
-		cmd->redir = new_redir;
-	else
+	if ((*curr)->type == WORD || (*curr)->type == ARG || (*curr)->type == CMD)
+		cmd->args[(*i)++] = expand_token_value((*curr)->value, env);
+	else if ((*curr)->type == REDIR_IN || (*curr)->type == REDIR_OUT
+		|| (*curr)->type == APPEND || (*curr)->type == HEREDOC)
 	{
-		last = cmd->redir;
-		while (last->next)
-			last = last->next;
-		last->next = new_redir;
+		add_redir(cmd, *curr, (*curr)->next);
+		if ((*curr)->next)
+			*curr = (*curr)->next;
 	}
-}
-
-static int	count_args(t_token *tokens)
-{
-	int		count;
-	t_token	*tmp;
-
-	count = 0;
-	tmp = tokens;
-	while (tmp && tmp->type != PIPE)
-	{
-		if (tmp->type == WORD || tmp->type == ARG || tmp->type == CMD)
-			count++;
-		else if (tmp->type == REDIR_IN || tmp->type == REDIR_OUT || \
-			tmp->type == APPEND || tmp->type == HEREDOC)
-		{
-			if (tmp->next)
-				tmp = tmp->next;
-		}
-		tmp = tmp->next;
-	}
-	return (count);
 }
 
 static void	fill_args(t_cmd *cmd, t_token **tokens, t_env *env)
@@ -91,23 +45,19 @@ static void	fill_args(t_cmd *cmd, t_token **tokens, t_env *env)
 	curr = *tokens;
 	while (curr && curr->type != PIPE)
 	{
-		if (curr->type == WORD || curr->type == ARG || curr->type == CMD)
-		{
-			cmd->args[i++] = expand_token_value(curr->value, env);
-		}
-		else if (curr->type == REDIR_IN || curr->type == REDIR_OUT || \
-			curr->type == APPEND || curr->type == HEREDOC)
-		{
-			add_redir(cmd, curr, curr->next);
-			if (curr->next)
-				curr = curr->next;
-		}
+		fill_args_loop(cmd, &curr, &i, env);
 		curr = curr->next;
 	}
 	cmd->args[i] = NULL;
 	*tokens = curr;
 }
 
+/*
+** Parses a list of tokens into a list of commands
+** @param tokens: The list of tokens to parse
+** @param env: The environment structure
+** @return: A pointer to the head of the command list
+*/
 t_cmd	*parse_tokens(t_token *tokens, t_env *env)
 {
 	t_cmd	*head;
@@ -127,7 +77,7 @@ t_cmd	*parse_tokens(t_token *tokens, t_env *env)
 			curr->next = new_cmd;
 		curr = new_cmd;
 		curr->head = head;
-		curr->env = env; // Store env in cmd if needed
+		curr->env = env;
 		fill_args(curr, &tokens, env);
 		if (tokens && tokens->type == PIPE)
 			tokens = tokens->next;

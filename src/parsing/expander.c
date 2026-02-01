@@ -3,40 +3,50 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antigravity <antigravity@student.42.fr>    +#+  +:+       +#+        */
+/*   By: wael <wael@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 13:50:00 by antigravity       #+#    #+#             */
-/*   Updated: 2026/01/23 13:50:00 by antigravity      ###   ########.fr       */
+/*   Updated: 2026/02/01 00:30:14 by wael             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*get_var_name(char *str)
+static void	handle_dollar(char **res, char *str, int *i, t_env *env)
 {
-	int		i;
+	char	*var;
+	char	*val;
 
-	i = 0;
-	if (str[i] == '?')
-		return (ft_strdup("?"));
-	while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
-		i++;
-	return (ft_substr(str, 0, i));
+	var = get_var_name(&str[*i + 1]);
+	if (var && *var)
+	{
+		val = get_val(var, env);
+		if (val)
+		{
+			*res = join_and_free(*res, val);
+			free(val);
+		}
+		*i += ft_strlen(var) + 1;
+		free(var);
+	}
+	else
+	{
+		if (var)
+			free(var);
+		(*i)++;
+	}
 }
 
-static char	*get_val(char *name, t_env *env)
-{
-	if (!ft_strcmp(name, "?"))
-		return (ft_itoa(0)); // TODO: use global exit status
-	return (get_env_val(env, name));
-}
-
+/*
+** Expands variables in a string
+** @param str: Input string
+** @param env: Environment list
+** @return: Expanded string
+*/
 char	*expand_str(char *str, t_env *env)
 {
 	char	*res;
 	char	*tmp;
-	char	*var;
-	char	*val;
 	int		i;
 	int		start;
 
@@ -48,68 +58,42 @@ char	*expand_str(char *str, t_env *env)
 		if (str[i] == '$')
 		{
 			tmp = ft_substr(str, start, i - start);
-			res = ft_strjoin(res, tmp);
+			res = join_and_free(res, tmp);
 			free(tmp);
-
-			var = get_var_name(&str[i + 1]);
-			if (var && *var)
-			{
-				val = get_val(var, env);
-				if (val)
-					res = ft_strjoin(res, val); // Leaks: previous res, need helper
-				// free(val) if itoa? get_env_val returns pointer to const?
-				// get_env_val returns env->value which is persistent.
-				// ft_itoa allocates.
-				// I need to know if I should free 'val'.
-				// For '?', yes. For others, no.
-				// Proper exp impl is complex. Simplified here.
-
-				i += ft_strlen(var) + 1;
-				start = i;
-				free(var);
-			}
-			else
-			{
-				if (var) free(var); // empty name
-				// just print $
-				i++; // start not updated
-			}
+			handle_dollar(&res, str, &i, env);
+			start = i;
 		}
 		else
 			i++;
 	}
 	tmp = ft_substr(str, start, i - start);
-	res = ft_strjoin(res, tmp);
+	res = join_and_free(res, tmp);
 	free(tmp);
 	return (res);
 }
 
-// Very basic expander for now.
-// Current tokenizer sends: "hello" for argument "hello".
-// We need to strip outer quotes.
-// If double quotes, expand content.
-// If single quotes, preserve content.
-// If no quotes, expand.
+/*
+** Expands token value, handling quotes
+** @param str: Token value string
+** @param env: Environment list
+** @return: Expanded string
+*/
 char	*expand_token_value(char *str, t_env *env)
 {
 	char	*res;
+	char	*inner;
 
-	if (!str) return (NULL);
-
+	if (!str)
+		return (NULL);
 	if (str[0] == '\'')
-	{
-		// Strip quotes
 		res = ft_substr(str, 1, ft_strlen(str) - 2);
-	}
 	else if (str[0] == '"')
 	{
-		char *inner = ft_substr(str, 1, ft_strlen(str) - 2);
+		inner = ft_substr(str, 1, ft_strlen(str) - 2);
 		res = expand_str(inner, env);
 		free(inner);
 	}
 	else
-	{
 		res = expand_str(str, env);
-	}
 	return (res);
 }
