@@ -40,20 +40,10 @@ t_cmd	*create_cmd(void)
 ** @param token: The redirection token
 ** @param file_token: The token containing the filename or delimiter
 */
-void	add_redir(t_cmd *cmd, t_token *token, t_token *file_token)
+static void	redir_add_back(t_cmd *cmd, t_redir *new_redir)
 {
-	t_redir	*new_redir;
 	t_redir	*last;
 
-	new_redir = malloc(sizeof(t_redir));
-	if (!new_redir)
-		return ;
-	new_redir->type = token->type;
-	new_redir->file = NULL;
-	if (file_token)
-		new_redir->file = ft_strdup(file_token->value);
-	new_redir->heredoc_fd = -1;
-	new_redir->next = NULL;
 	if (!cmd->redir)
 		cmd->redir = new_redir;
 	else
@@ -63,6 +53,43 @@ void	add_redir(t_cmd *cmd, t_token *token, t_token *file_token)
 			last = last->next;
 		last->next = new_redir;
 	}
+}
+
+static void	init_hd_redir(t_redir *redir, char *value)
+{
+	int	len;
+
+	len = ft_strlen(value);
+	if (len >= 2 && (value[0] == '\'' || value[0] == '"')
+		&& value[len - 1] == value[0])
+	{
+		redir->heredoc_expand = 0;
+		redir->file = ft_substr(value, 1, len - 2);
+	}
+	else
+	{
+		redir->heredoc_expand = 1;
+		redir->file = ft_strdup(value);
+	}
+}
+
+void	add_redir(t_cmd *cmd, t_token *token, t_token *file_token)
+{
+	t_redir	*new_redir;
+
+	new_redir = malloc(sizeof(t_redir));
+	if (!new_redir)
+		return ;
+	new_redir->type = token->type;
+	new_redir->file = NULL;
+	new_redir->heredoc_expand = 0;
+	new_redir->heredoc_fd = -1;
+	new_redir->next = NULL;
+	if (file_token && token->type == HEREDOC)
+		init_hd_redir(new_redir, file_token->value);
+	else if (file_token)
+		new_redir->file = expand_token_value(file_token->value, cmd->env);
+	redir_add_back(cmd, new_redir);
 }
 
 /*

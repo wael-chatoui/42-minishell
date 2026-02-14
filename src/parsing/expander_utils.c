@@ -6,17 +6,12 @@
 /*   By: wael <wael@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/01 00:00:00 by wael              #+#    #+#             */
-/*   Updated: 2026/02/01 00:30:08 by wael             ###   ########.fr       */
+/*   Updated: 2026/02/14 10:00:00 by wael             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*
-** Extracts variable name from string
-** @param str: String starting after $
-** @return: The variable name
-*/
 char	*get_var_name(char *str)
 {
 	int		i;
@@ -29,12 +24,6 @@ char	*get_var_name(char *str)
 	return (ft_substr(str, 0, i));
 }
 
-/*
-** Gets value of a variable from env or global status
-** @param name: Variable name
-** @param env: Environment list
-** @return: Allocated string value
-*/
 char	*get_val(char *name, t_env *env)
 {
 	char	*val;
@@ -47,12 +36,6 @@ char	*get_val(char *name, t_env *env)
 	return (NULL);
 }
 
-/*
-** Joins two strings and frees the first one
-** @param s1: First string (freed)
-** @param s2: Second string (not freed)
-** @return: New joined string
-*/
 char	*join_and_free(char *s1, char *s2)
 {
 	char	*new_str;
@@ -62,4 +45,24 @@ char	*join_and_free(char *s1, char *s2)
 	new_str = ft_strjoin(s1, s2);
 	free(s1);
 	return (new_str);
+}
+
+char	*append_char(char *s, char c)
+{
+	char	buf[2];
+
+	buf[0] = c;
+	buf[1] = '\0';
+	return (join_and_free(s, buf));
+}
+
+char	*append_substr(char *s, char *str, int start, int len)
+{
+	char	*sub;
+	char	*res;
+
+	sub = ft_substr(str, start, len);
+	res = join_and_free(s, sub);
+	free(sub);
+	return (res);
 }

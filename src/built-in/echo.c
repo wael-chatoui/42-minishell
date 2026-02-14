@@ -1,22 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo_pwd.c                                          :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antigravity <antigravity@student.42.fr>    +#+  +:+       +#+        */
+/*   By: wael <wael@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 13:25:00 by antigravity       #+#    #+#             */
-/*   Updated: 2026/01/23 13:25:00 by antigravity      ###   ########.fr       */
+/*   Updated: 2026/02/14 10:00:00 by wael             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*
-** Executes the echo command
-** @param args: Arguments array
-** @return: 0 on success
-*/
+static int	is_n_flag(char *str)
+{
+	int	i;
+
+	if (!str || str[0] != '-')
+		return (0);
+	i = 1;
+	if (!str[i])
+		return (0);
+	while (str[i])
+	{
+		if (str[i] != 'n')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 int	ft_echo(char **args)
 {
 	int	i;
@@ -24,7 +37,7 @@ int	ft_echo(char **args)
 
 	i = 1;
 	n_flag = 0;
-	if (args[1] && !ft_strcmp(args[1], "-n"))
+	while (args[i] && is_n_flag(args[i]))
 	{
 		n_flag = 1;
 		i++;
@@ -41,10 +54,6 @@ int	ft_echo(char **args)
 	return (0);
 }
 
-/*
-** Executes the pwd command (prints current working directory)
-** @return: 0 on success, 1 on failure
-*/
 int	ft_pwd(void)
 {
 	char	cwd[1024];

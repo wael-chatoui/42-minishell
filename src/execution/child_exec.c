@@ -16,9 +16,18 @@ static void	handle_cmd_not_found(char *cmd)
 {
 	if (!cmd)
 		exit(0);
-	write(2, "minishell: command not found: ", 30);
-	write(2, cmd, ft_strlen(cmd));
-	write(2, "\n", 1);
+	if (ft_strchr(cmd, '/'))
+	{
+		write(2, "minishell: ", 11);
+		write(2, cmd, ft_strlen(cmd));
+		write(2, ": No such file or directory\n", 28);
+	}
+	else
+	{
+		write(2, "minishell: ", 11);
+		write(2, cmd, ft_strlen(cmd));
+		write(2, ": command not found\n", 20);
+	}
 	exit(127);
 }
 
@@ -55,8 +64,14 @@ void	execute_child(t_cmd *cmd, t_env **env, int prev_fd)
 		exit(1);
 	if (!cmd->args || !cmd->args[0])
 		exit(0);
+	if (!cmd->args[0][0])
+		handle_cmd_not_found(cmd->args[0]);
 	if (is_builtin(cmd->args[0]))
-		exit(execute_builtin(cmd, env));
+	{
+		if (execute_builtin(cmd, env) == -1)
+			exit(g_sig);
+		exit(g_sig);
+	}
 	envp_arr = env_to_array(*env);
 	path = find_path(cmd->args[0], envp_arr);
 	if (!path)

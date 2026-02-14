@@ -6,7 +6,7 @@
 /*   By: wael <wael@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 13:50:00 by antigravity       #+#    #+#             */
-/*   Updated: 2026/02/01 00:30:14 by wael             ###   ########.fr       */
+/*   Updated: 2026/02/14 10:00:00 by wael             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,69 +31,68 @@ static void	handle_dollar(char **res, char *str, int *i, t_env *env)
 	}
 	else
 	{
+		*res = append_char(*res, '$');
 		if (var)
 			free(var);
 		(*i)++;
 	}
 }
 
-/*
-** Expands variables in a string
-** @param str: Input string
-** @param env: Environment list
-** @return: Expanded string
-*/
-char	*expand_str(char *str, t_env *env)
+static void	handle_squote(char **res, char *str, int *i)
 {
-	char	*res;
-	char	*tmp;
-	int		i;
-	int		start;
+	int	start;
 
-	res = ft_strdup("");
-	i = 0;
-	start = 0;
-	while (str[i])
+	(*i)++;
+	start = *i;
+	while (str[*i] && str[*i] != '\'')
+		(*i)++;
+	if (*i > start)
 	{
-		if (str[i] == '$')
-		{
-			tmp = ft_substr(str, start, i - start);
-			res = join_and_free(res, tmp);
-			free(tmp);
-			handle_dollar(&res, str, &i, env);
-			start = i;
-		}
-		else
-			i++;
+		*res = append_substr(*res, str, start, *i - start);
 	}
-	tmp = ft_substr(str, start, i - start);
-	res = join_and_free(res, tmp);
-	free(tmp);
-	return (res);
+	if (str[*i] == '\'')
+		(*i)++;
 }
 
-/*
-** Expands token value, handling quotes
-** @param str: Token value string
-** @param env: Environment list
-** @return: Expanded string
-*/
+static void	handle_dquote(char **res, char *str, int *i, t_env *env)
+{
+	(*i)++;
+	while (str[*i] && str[*i] != '"')
+	{
+		if (str[*i] == '$')
+			handle_dollar(res, str, i, env);
+		else
+		{
+			*res = append_char(*res, str[*i]);
+			(*i)++;
+		}
+	}
+	if (str[*i] == '"')
+		(*i)++;
+}
+
 char	*expand_token_value(char *str, t_env *env)
 {
 	char	*res;
-	char	*inner;
+	int		i;
 
 	if (!str)
 		return (NULL);
-	if (str[0] == '\'')
-		res = ft_substr(str, 1, ft_strlen(str) - 2);
-	else if (str[0] == '"')
+	res = ft_strdup("");
+	i = 0;
+	while (str[i])
 	{
-		inner = ft_substr(str, 1, ft_strlen(str) - 2);
-		res = expand_str(inner, env);
-		free(inner);
+		if (str[i] == '\'')
+			handle_squote(&res, str, &i);
+		else if (str[i] == '"')
+			handle_dquote(&res, str, &i, env);
+		else if (str[i] == '$')
+			handle_dollar(&res, str, &i, env);
+		else
+		{
+			res = append_char(res, str[i]);
+			i++;
+		}
 	}
-	else
-		res = expand_str(str, env);
 	return (res);
 }

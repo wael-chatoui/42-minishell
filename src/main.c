@@ -6,7 +6,7 @@
 /*   By: wael <wael@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 17:27:53 by wael              #+#    #+#             */
-/*   Updated: 2026/02/01 00:57:59 by wael             ###   ########.fr       */
+/*   Updated: 2026/02/14 10:00:00 by wael             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,37 +14,52 @@
 
 int		g_sig;
 
-
-** Main loop of the shell
-** @param env: Pointer to the environment list
-*/
-static void	process_input(char *input, t_env **env)
+static int	run_cmds(t_token *tokens, t_env **env)
 {
-	t_token	*tokens;
 	t_cmd	*cmds;
+	int		ret;
 
-	add_history(input);
-	tokens = lexer(input);
-	if (!tokens)
-		return ;
+	ret = 0;
 	cmds = parse_tokens(tokens, *env);
 	if (cmds)
 	{
-		execute_cmds(cmds, env);
+		if (!collect_heredocs(cmds))
+			ret = execute_cmds(cmds, env);
 		free_cmds(cmds);
 	}
-	free_tokens(tokens);
+	return (ret);
 }
 
-/*
-** Main loop of the shell
-** @param env: Pointer to the environment list
-*/
+static int	process_input(char *input, t_env **env)
+{
+	t_token	*tokens;
+	int		ret;
+
+	add_history(input);
+	if (check_unclosed_quotes(input))
+	{
+		g_sig = 258;
+		return (0);
+	}
+	tokens = lexer(input);
+	if (!tokens)
+		return (0);
+	if (check_syntax(tokens))
+	{
+		g_sig = 258;
+		free_tokens(tokens);
+		return (0);
+	}
+	ret = run_cmds(tokens, env);
+	free_tokens(tokens);
+	return (ret);
+}
+
 void	miniloop(t_env **env)
 {
 	char	*input;
 
-	while (true)
+	while (1)
 	{
 		input = readline("minishell > ");
 		if (!input)
@@ -53,7 +68,13 @@ void	miniloop(t_env **env)
 			break ;
 		}
 		if (input[0] != '\0')
-			process_input(input, env);
+		{
+			if (process_input(input, env))
+			{
+				free(input);
+				break ;
+			}
+		}
 		free(input);
 	}
 }
@@ -64,11 +85,10 @@ int	main(int ac, char **av, char **envp)
 
 	(void)ac;
 	(void)av;
-
 	env = init_env(envp);
-
 	setup_parent_signals();
 	miniloop(&env);
+	rl_clear_history();
 	free_env(env);
-	return (0);
+	return (g_sig);
 }

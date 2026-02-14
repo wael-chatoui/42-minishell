@@ -12,11 +12,32 @@
 
 #include "minishell.h"
 
-/*
-** Checks if a command is a builtin
-** @param cmd: The command name
-** @return: 1 if builtin, 0 otherwise
-*/
+int	is_valid_id(char *name)
+{
+	int	i;
+
+	if (!name || !name[0])
+		return (0);
+	if (!ft_isalpha(name[0]) && name[0] != '_')
+		return (0);
+	i = 1;
+	while (name[i])
+	{
+		if (!ft_isalnum(name[i]) && name[i] != '_')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+int	print_id_error(char *arg)
+{
+	write(2, "minishell: export: `", 20);
+	write(2, arg, ft_strlen(arg));
+	write(2, "': not a valid identifier\n", 26);
+	return (1);
+}
+
 int	is_builtin(char *cmd)
 {
 	if (!cmd)

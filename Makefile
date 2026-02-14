@@ -38,18 +38,22 @@ SRCS		=	main.c \
 				built-in/echo.c \
 				built-in/cd.c \
 				built-in/builtins_extra.c \
+				built-in/export_print.c \
 				parsing/parser.c \
 				parsing/lexer.c \
 				parsing/lexer_utils.c \
 				parsing/expander.c \
 				parsing/expander_utils.c \
 				parsing/parser_utils.c \
+				parsing/syntax.c \
 				execution/exec_utils.c \
 				execution/child_exec.c \
 				execution/builtin_exec.c \
 				execution/redirections.c \
 				execution/signals.c \
-				execution/executor.c
+				execution/executor.c \
+				execution/executor_utils.c \
+				execution/heredoc.c
 
 # Object files
 OBJS		=	$(SRCS:%.c=$(OBJ_DIR)/%.o)
