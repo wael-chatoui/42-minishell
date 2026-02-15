@@ -6,7 +6,7 @@
 /*   By: wael <wael@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 13:25:00 by antigravity       #+#    #+#             */
-/*   Updated: 2026/02/14 10:00:00 by wael             ###   ########.fr       */
+/*   Updated: 2026/02/15 16:56:00 by wael             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,6 @@ int	ft_cd(char **args, t_env **env)
 		return (1);
 	}
 	if (getcwd(new_cwd, sizeof(new_cwd)))
-	{
-		set_env_val(env, "OLDPWD", old_cwd);
-		set_env_val(env, "PWD", new_cwd);
-	}
+		(set_env_val(env, "OLDPWD", old_cwd), set_env_val(env, "PWD", new_cwd));
 	return (0);
 }

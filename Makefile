@@ -38,6 +38,7 @@ SRCS		=	main.c \
 				built-in/echo.c \
 				built-in/cd.c \
 				built-in/builtins_extra.c \
+			built-in/ft_exit.c \
 				built-in/export_print.c \
 				parsing/parser.c \
 				parsing/lexer.c \
