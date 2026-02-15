@@ -18,10 +18,29 @@
 ** @param tokens: Pointer to the list of tokens
 ** @param env: The environment structure
 */
+static int	has_quotes(char *str)
+{
+	while (*str)
+	{
+		if (*str == '\'' || *str == '"')
+			return (1);
+		str++;
+	}
+	return (0);
+}
+
 static void	fill_args_loop(t_cmd *cmd, t_token **curr, int *i, t_env *env)
 {
+	char	*expanded;
+
 	if ((*curr)->type == WORD || (*curr)->type == ARG || (*curr)->type == CMD)
-		cmd->args[(*i)++] = expand_token_value((*curr)->value, env);
+	{
+		expanded = expand_token_value((*curr)->value, env);
+		if (expanded[0] || has_quotes((*curr)->value))
+			cmd->args[(*i)++] = expanded;
+		else
+			free(expanded);
+	}
 	else if ((*curr)->type == REDIR_IN || (*curr)->type == REDIR_OUT
 		|| (*curr)->type == APPEND || (*curr)->type == HEREDOC)
 	{

@@ -11,23 +11,37 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <sys/stat.h>
+
+static void	print_cmd_error(char *cmd, char *msg)
+{
+	write(2, "minishell: ", 11);
+	write(2, cmd, ft_strlen(cmd));
+	write(2, msg, ft_strlen(msg));
+}
 
 static void	handle_cmd_not_found(char *cmd)
 {
+	struct stat	st;
+
 	if (!cmd)
 		exit(0);
-	if (ft_strchr(cmd, '/'))
+	if (!ft_strchr(cmd, '/'))
 	{
-		write(2, "minishell: ", 11);
-		write(2, cmd, ft_strlen(cmd));
-		write(2, ": No such file or directory\n", 28);
+		print_cmd_error(cmd, ": command not found\n");
+		exit(127);
 	}
-	else
+	if (stat(cmd, &st) == 0 && S_ISDIR(st.st_mode))
 	{
-		write(2, "minishell: ", 11);
-		write(2, cmd, ft_strlen(cmd));
-		write(2, ": command not found\n", 20);
+		print_cmd_error(cmd, ": Is a directory\n");
+		exit(126);
 	}
+	if (access(cmd, F_OK) == 0)
+	{
+		print_cmd_error(cmd, ": Permission denied\n");
+		exit(126);
+	}
+	print_cmd_error(cmd, ": No such file or directory\n");
 	exit(127);
 }
 
@@ -77,6 +91,5 @@ void	execute_child(t_cmd *cmd, t_env **env, int prev_fd)
 	if (!path)
 		handle_cmd_not_found(cmd->args[0]);
 	execve(path, cmd->args, envp_arr);
-	perror("execve");
-	exit(1);
+	handle_cmd_not_found(cmd->args[0]);
 }

@@ -52,6 +52,11 @@ int	ft_cd(char **args, t_env **env)
 	char	old_cwd[1024];
 	char	new_cwd[1024];
 
+	if (args[1] && args[2])
+	{
+		write(2, "minishell: cd: too many arguments\n", 33);
+		return (1);
+	}
 	path = get_cd_path(args, env);
 	if (!path)
 		return (1);

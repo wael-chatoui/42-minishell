@@ -43,7 +43,11 @@ int	ft_export(char **args, t_env **env)
 	{
 		eq = ft_strchr(args[i], '=');
 		if (!eq)
+		{
+			if (!is_valid_id(args[i]))
+				ret = print_id_error(args[i]);
 			continue ;
+		}
 		name = ft_substr(args[i], 0, eq - args[i]);
 		if (!is_valid_id(name))
 			ret = print_id_error(args[i]);
@@ -95,7 +99,7 @@ int	ft_exit(char **args)
 		write(2, "minishell: exit: ", 17);
 		write(2, args[1], ft_strlen(args[1]));
 		write(2, ": numeric argument required\n", 28);
-		g_sig = 255;
+		g_sig = 2;
 		return (-1);
 	}
 	if (args[2])
