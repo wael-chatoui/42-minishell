@@ -12,12 +12,6 @@
 
 #include "minishell.h"
 
-/*
-** Handles word tokens, respecting quotes
-** @param input: The input string
-** @param i: Pointer to the current index
-** @return: The duplicated string value of the word
-*/
 char	*handle_word(char *input, int *i)
 {
 	int		start;
@@ -95,11 +89,6 @@ static int	handle_token(char *input, int *i, char **val, int *type)
 	return (0);
 }
 
-/*
-** Main lexer function to tokenize input
-** @param input: The input command line string
-** @return: A linked list of tokens
-*/
 t_token	*lexer(char *input)
 {
 	t_token	*head;

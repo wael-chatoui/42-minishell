@@ -10,26 +10,21 @@
 #                                                                              #
 # **************************************************************************** #
 
-# Program name
 NAME		=	minishell
 
-# Compiler and flags
 CC			=	cc
 CFLAGS		=	-Wall -Wextra -Werror -g3
 RM			=	rm -f
 
-# Directories
 SRC_DIR			=	src
 OBJ_DIR			=	obj
 INC_DIR			=	inc
 LIBFT_DIR		=	$(INC_DIR)/42-libft
 
 
-# Libraries
 LIBFT		=	$(LIBFT_DIR)/libft.a
 
 
-# Source files
 SRCS		=	main.c \
 				env.c \
 				env_utils.c \
@@ -64,10 +59,6 @@ INCLUDES	=	-I$(INC_DIR) -I$(LIBFT_DIR)
 
 # Linker flags
 LDFLAGS		=	-L$(LIBFT_DIR) -lft -lreadline
-
-# **************************************************************************** #
-#                                    RULES                                     #
-# **************************************************************************** #
 
 all:		$(NAME)
 

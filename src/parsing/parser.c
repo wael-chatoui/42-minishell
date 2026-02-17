@@ -12,6 +12,7 @@
 
 #include "minishell.h"
 
+<<<<<<< Updated upstream
 /*
 ** Fills the command arguments array
 ** @param cmd: The command structure
@@ -29,6 +30,8 @@ static int	has_quotes(char *str)
 	return (0);
 }
 
+=======
+>>>>>>> Stashed changes
 static void	fill_args_loop(t_cmd *cmd, t_token **curr, int *i, t_env *env)
 {
 	char	*expanded;
@@ -71,12 +74,6 @@ static void	fill_args(t_cmd *cmd, t_token **tokens, t_env *env)
 	*tokens = curr;
 }
 
-/*
-** Parses a list of tokens into a list of commands
-** @param tokens: The list of tokens to parse
-** @param env: The environment structure
-** @return: A pointer to the head of the command list
-*/
 t_cmd	*parse_tokens(t_token *tokens, t_env *env)
 {
 	t_cmd	*head;

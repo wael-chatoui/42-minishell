@@ -61,12 +61,6 @@ static void	redirect_io(t_cmd *cmd, int prev_fd)
 		close(cmd->fd_in);
 }
 
-/*
-** Executes a command in a child process
-** @param cmd: The command structure
-** @param env: The environment structure
-** @param prev_fd: The file descriptor of the previous pipe
-*/
 void	execute_child(t_cmd *cmd, t_env **env, int prev_fd)
 {
 	char	*path;

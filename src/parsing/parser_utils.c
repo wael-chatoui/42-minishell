@@ -12,10 +12,6 @@
 
 #include "minishell.h"
 
-/*
-** Creates a new command node and initializes its values
-** @return: A pointer to the new command
-*/
 t_cmd	*create_cmd(void)
 {
 	t_cmd	*cmd;
@@ -34,12 +30,6 @@ t_cmd	*create_cmd(void)
 	return (cmd);
 }
 
-/*
-** Adds a redirection to the command's redirection list
-** @param cmd: The command structure
-** @param token: The redirection token
-** @param file_token: The token containing the filename or delimiter
-*/
 static void	redir_add_back(t_cmd *cmd, t_redir *new_redir)
 {
 	t_redir	*last;
@@ -92,9 +82,6 @@ void	add_redir(t_cmd *cmd, t_token *token, t_token *file_token)
 	redir_add_back(cmd, new_redir);
 }
 
-/*
-** Count arguments in tokens
-*/
 int	count_args(t_token *tokens)
 {
 	int		count;

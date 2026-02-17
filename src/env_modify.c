@@ -12,12 +12,6 @@
 
 #include "minishell.h"
 
-/*
-** Sets the value of an environment variable
-** @param env: Pointer to the environment list head
-** @param name: The name of the variable
-** @param value: The value to set
-*/
 void	set_env_val(t_env **env, char *name, char *value)
 {
 	t_env	*tmp;
@@ -44,11 +38,6 @@ void	set_env_val(t_env **env, char *name, char *value)
 	*env = new;
 }
 
-/*
-** Removes an environment variable
-** @param env: Pointer to the environment list head
-** @param name: The name of the variable to remove
-*/
 void	remove_env_var(t_env **env, char *name)
 {
 	t_env	*tmp;

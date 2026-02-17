@@ -50,12 +50,6 @@ int	is_builtin(char *cmd)
 	return (0);
 }
 
-/*
-** Executes a builtin command
-** @param cmd: The command structure
-** @param env: The environment structure
-** @return: The exit status of the builtin
-*/
 int	execute_builtin(t_cmd *cmd, t_env **env)
 {
 	if (!ft_strcmp(cmd->args[0], "echo"))

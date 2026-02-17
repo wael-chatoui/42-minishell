@@ -42,11 +42,6 @@ static char	*create_env_str(t_env *node)
 	return (ft_strdup(node->name));
 }
 
-/*
-** Converts the environment list to an array
-** @param env: The environment list
-** @return: Methods array of environment strings
-*/
 char	**env_to_array(t_env *env)
 {
 	char	**arr;
@@ -68,12 +63,6 @@ char	**env_to_array(t_env *env)
 	return (arr);
 }
 
-/*
-** Gets the value of an environment variable
-** @param env: The environment list
-** @param name: The name of the variable
-** @return: The value of the variable
-*/
 char	*get_env_val(t_env *env, char *name)
 {
 	while (env)

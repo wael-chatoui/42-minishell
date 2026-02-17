@@ -12,10 +12,6 @@
 
 #include "minishell.h"
 
-/*
-** Frees the environment list
-** @param env: The environment list to free
-*/
 void	free_env(t_env *env)
 {
 	t_env	*tmp;
@@ -57,11 +53,6 @@ static t_env	*new_env_node(char *env_str)
 	return (node);
 }
 
-/*
-** Initializes the environment list from envp array
-** @param envp: The environment variables array
-** @return: The head of the environment list
-*/
 t_env	*init_env(char **envp)
 {
 	t_env	*head;

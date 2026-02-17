@@ -12,10 +12,6 @@
 
 #include "minishell.h"
 
-/*
-** Frees the list of tokens
-** @param token: The head of the token list
-*/
 void	free_tokens(t_token *token)
 {
 	t_token	*tmp;
