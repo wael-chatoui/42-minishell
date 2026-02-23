@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wael <wael@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: wchatoui <wchatoui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 17:28:22 by wael              #+#    #+#             */
-/*   Updated: 2026/02/14 10:00:00 by wael             ###   ########.fr       */
+/*   Updated: 2026/02/23 13:20:52 by wchatoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	free_tokens(t_token *token);
 t_token	*lexer(char *input);
 t_token	*new_token(char *value, int type, int index);
 void	token_add_back(t_token **head, t_token *new);
-int		is_whitespace(char c);
+int		is_space(char c);
 int		is_operator(char c);
 t_cmd	*parse_tokens(t_token *tokens, t_env *env);
 char	*expand_token_value(char *str, t_env *env);

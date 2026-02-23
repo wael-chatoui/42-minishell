@@ -12,6 +12,17 @@
 
 #include "minishell.h"
 
+static int	has_quotes(char *str)
+{
+	while (*str)
+	{
+		if (*str == '\'' || *str == '"')
+			return (1);
+		str++;
+	}
+	return (0);
+}
+
 static void	fill_args_loop(t_cmd *cmd, t_token **curr, int *i, t_env *env)
 {
 	char	*expanded;

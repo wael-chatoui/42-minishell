@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wael <wael@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: wchatoui <wchatoui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/01 00:00:00 by wael              #+#    #+#             */
-/*   Updated: 2026/02/01 00:27:47 by wael             ###   ########.fr       */
+/*   Updated: 2026/02/23 13:20:38 by wchatoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	is_whitespace(char c)
+int	is_space(char c)
 {
 	return (c == ' ' || c == '\t' || c == '\n');
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wael <wael@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: wchatoui <wchatoui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/01 00:00:00 by wael              #+#    #+#             */
-/*   Updated: 2026/02/01 00:27:49 by wael             ###   ########.fr       */
+/*   Updated: 2026/02/23 13:22:51 by wchatoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*handle_word(char *input, int *i)
 		{
 			if (input[*i] == '\'' || input[*i] == '"')
 				quote = input[*i];
-			else if (is_whitespace(input[*i]) || is_operator(input[*i]))
+			else if (is_space(input[*i]) || is_operator(input[*i]))
 				break ;
 		}
 		(*i)++;
@@ -102,7 +102,7 @@ t_token	*lexer(char *input)
 	index = 0;
 	while (input[i])
 	{
-		while (input[i] && is_whitespace(input[i]))
+		while (input[i] && is_space(input[i]))
 			i++;
 		if (!input[i])
 			break ;
