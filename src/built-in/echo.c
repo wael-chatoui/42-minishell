@@ -54,16 +54,22 @@ int	ft_echo(char **args)
 	return (0);
 }
 
-int	ft_pwd(void)
+int	ft_pwd(t_env *env)
 {
+	char	*pwd;
 	char	cwd[1024];
 
-	if (getcwd(cwd, sizeof(cwd)))
+	pwd = get_env_val(env, "PWD");
+	if (!pwd)
 	{
-		write(1, cwd, ft_strlen(cwd));
-		write(1, "\n", 1);
-		return (0);
+		if (!getcwd(cwd, sizeof(cwd)))
+		{
+			perror("pwd");
+			return (1);
+		}
+		pwd = cwd;
 	}
-	perror("pwd");
-	return (1);
+	write(1, pwd, ft_strlen(pwd));
+	write(1, "\n", 1);
+	return (0);
 }

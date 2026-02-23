@@ -57,7 +57,7 @@ int	execute_builtin(t_cmd *cmd, t_env **env)
 	if (!ft_strcmp(cmd->args[0], "cd"))
 		return (ft_cd(cmd->args, env));
 	if (!ft_strcmp(cmd->args[0], "pwd"))
-		return (ft_pwd());
+		return (ft_pwd(*env));
 	if (!ft_strcmp(cmd->args[0], "env"))
 		return (ft_env(*env));
 	if (!ft_strcmp(cmd->args[0], "export"))

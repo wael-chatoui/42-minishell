@@ -114,7 +114,7 @@ int		execute_cmds(t_cmd *cmds, t_env **env);
 void	wait_children(pid_t last_pid);
 int		exec_single_builtin(t_cmd *cmds, t_env **env);
 int		ft_echo(char **args);
-int		ft_pwd(void);
+int		ft_pwd(t_env *env);
 int		ft_cd(char **args, t_env **env);
 int		ft_env(t_env *env);
 int		is_valid_id(char *name);
