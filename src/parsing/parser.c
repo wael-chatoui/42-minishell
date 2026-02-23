@@ -3,35 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wael <wael@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: wchatoui <wchatoui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 12:55:00 by antigravity       #+#    #+#             */
-/*   Updated: 2026/02/01 00:30:23 by wael             ###   ########.fr       */
+/*   Updated: 2026/02/23 12:55:33 by wchatoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-<<<<<<< Updated upstream
-/*
-** Fills the command arguments array
-** @param cmd: The command structure
-** @param tokens: Pointer to the list of tokens
-** @param env: The environment structure
-*/
-static int	has_quotes(char *str)
-{
-	while (*str)
-	{
-		if (*str == '\'' || *str == '"')
-			return (1);
-		str++;
-	}
-	return (0);
-}
-
-=======
->>>>>>> Stashed changes
 static void	fill_args_loop(t_cmd *cmd, t_token **curr, int *i, t_env *env)
 {
 	char	*expanded;
